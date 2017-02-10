@@ -89,7 +89,7 @@ Implement onConfigurationChanged method in MainActivity.java
         //        KeyEventModule.getInstance().onKeyDownEvent(keyCode);
         //
         // Using B.
-        KeyEventModule.getInstance().onKeyDownEvent(keyCode);
+        KeyEventModule.getInstance().onKeyDownEvent(keyCode, event);
 
         // There are 2 ways this can be done:
         //  1.  Override the default keyboard event behavior
@@ -106,7 +106,7 @@ Implement onConfigurationChanged method in MainActivity.java
 
       @Override  // <--- Add this method if you want to react to keyUp
       public boolean onKeyUp(int keyCode, KeyEvent event) {
-        KeyEventModule.getInstance().onKeyUpEvent(keyCode);
+        KeyEventModule.getInstance().onKeyUpEvent(keyCode, event);
 
         // There are 2 ways this can be done:
         //  1.  Override the default keyboard event behavior
@@ -135,13 +135,19 @@ Whenever you want to use it within React Native code now you can:
 ```javascript
   componentDidMount() {
     // if you want to react to keyDown
-    KeyEvent.onKeyDownListener((keyCode) => {
+    KeyEvent.onKeyDownListener((params) => {
+	  const { keyCode, unicodeChar } = params;
       console.log(`Key code pressed: ${keyCode}`);
+      console.log(`Unicode Char pressed: ${unicodeChar}`);
+      console.log(`Unicode char string: ${String.fromCharCode(unicodeChar)}`)
     });
 
     // if you want to react to keyUp
-    KeyEvent.onKeyUpListener((keyCode) => {
+    KeyEvent.onKeyUpListener((params) => {
+	  const { keyCode, unicodeChar } = params;
       console.log(`Key code pressed: ${keyCode}`);
+      console.log(`Unicode Char pressed: ${unicodeChar}`);
+      console.log(`Unicode char string: ${String.fromCharCode(unicodeChar)}`)
     });
   }
 
